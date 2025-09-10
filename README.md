@@ -1,1 +1,1 @@
-# Notes-Setmanals-administraci-i-manteniment-de-sistemes
+# Notes Setmanals administració i manteniment de sistemes i aplicacions
