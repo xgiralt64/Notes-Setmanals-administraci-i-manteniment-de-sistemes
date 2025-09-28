@@ -1,4 +1,4 @@
-## ****Setmana sobre Arrencada del Sistema (Part 1)
+## Setmana sobre Arrencada del Sistema (Part 1)
 
 ### Resum teòric
 
