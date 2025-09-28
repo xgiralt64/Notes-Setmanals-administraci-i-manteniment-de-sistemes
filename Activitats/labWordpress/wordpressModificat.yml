@@ -1,0 +1,74 @@
+- hosts: webserver
+  become: yes
+  #Variables que he creat
+  vars:
+    wordpress_version: "latest"
+    wordpress_download_url: "https://wordpress.org/{{ wordpress_version }}.tar.gz"
+
+
+    db_name: "wordpress"
+    db_user: "wordpress"
+    db_password: "wordpress"
+    db_host: "Ruta AWS"
+    db_table_prefix: "wp_"
+    wp_debug: false
+
+  tasks:
+    - name: Actualitzar repositoris
+      dnf:
+        name: "*"
+        state: latest
+
+    - name: Instal·lar Apache i PHP amb extensions
+      dnf:
+        name:
+          - httpd
+          - php
+          - php-mysqlnd
+          - php-gd
+          - php-xml
+          - php-json
+        state: present
+
+    - name: Activar i arrencar Apache
+      systemd:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Descarregar WordPress
+      get_url:
+        url: "{{ wordpress_download_url }}"
+        dest: "/tmp/wordpress.tar.gz"
+
+    - name: Descomprimir WordPress
+      unarchive:
+        src: "/tmp/wordpress.tar.gz"
+        dest: "/var/www/html/"
+        remote_src: yes
+        extra_opts: [--strip-components=1]
+
+    - name: Assignar permisos correctes
+      file:
+        path: "/var/www/html"
+        owner: apache
+        group: apache
+        mode: '0755'
+        recurse: yes
+
+    - name: Crear arxiu wp-config.php bàsic
+      copy:
+        dest: "/var/www/html/wp-config.php"
+        content: |
+          <?php
+          define('DB_NAME', '{{ db_name }}');
+          define('DB_USER', '{{ db_user }}');
+          define('DB_PASSWORD', '{{ db_password }}');
+          define('DB_HOST', '{{ db_host }}');
+          define('DB_CHARSET', 'utf8');
+          define('DB_COLLATE', '');
+          $table_prefix = '{{ db_table_prefix }}';
+          define('WP_DEBUG', {{ wp_debug | ternary('true', 'false') }});
+          if ( !defined('ABSPATH') )
+            define('ABSPATH', __DIR__ . '/');
+          require_once ABSPATH . 'wp-settings.php';
