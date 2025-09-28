@@ -1,4 +1,4 @@
-## Setmana sobre Arrencada del Sistema (Part 1)
+## ****Setmana sobre Arrencada del Sistema (Part 1)
 
 ### Resum teòric
 
@@ -21,7 +21,7 @@ Aquesta setmana hem treballat el procés d’**arrencada del sistema**, que és 
 - **BIOS vs UEFI**
 
   - BIOS: emmagatzematge en ROM, limitat a discos de 2,2 TB, interfície en text, sense proteccions de seguretat.
-  - UEFI: suporta discos grans (fins a 9,4 ZB), interfície gràfica, *Secure Boot*, modularitat i compatibilitat amb Legacy BIOS.
+  - UEFI: suporta discos grans (fins a 9,4 ZB), interfície gràfica, Secure Boot, modularitat i compatibilitat amb Legacy BIOS.
 - **Taules de particions**
 
   - **MBR**: suporta fins a 4 particions primàries (o estesa + lògiques). Limitat a 2 TB.
